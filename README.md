@@ -58,5 +58,23 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
+Angular CLI Commands:
+npm i -g @angular/cli
+ng version
+ng new my-new-app
+ng serve --open
+ng serve --o
+ng g c home
+ng generate component about
+ng g s auth
+ng g d example-directory
+ng g p data-formater
+ng serve
+ng build
+ng test
+ng help
+ng mcp
+
 Angular Tutorial Git Branch Till Now:
 1-interpolation
+2-angular-cli-commands
