@@ -63,3 +63,4 @@ Angular Tutorial Git Branch Till Now:
 2-angular-cli-commands
 3-components
 4-custom-components
+5-property-binding
