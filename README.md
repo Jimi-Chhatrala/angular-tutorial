@@ -61,3 +61,4 @@ For more information on using the Angular CLI, including detailed command refere
 Angular Tutorial Git Branch Till Now:
 1-interpolation
 2-angular-cli-commands
+3-components
