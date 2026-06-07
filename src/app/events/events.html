@@ -1,0 +1,17 @@
+<p>events works!</p>
+<button (click)="increment()">Plus</button>
+<!-- <p>Count : {{ count }}</p> -->
+<p>Count : {{ count() }}</p>
+
+<button (click)="showEvent($event)">Show Event</button>
+<p>Event data: {{ eventData }}</p>
+
+<input type="text" name="username" id="username" (input)="updateUsernameValue($event.target.value)">
+<p>username: {{ username }}</p>
+
+<form (submit)="handleSubmit($event)">
+  <input type="text" name="email" id="email" placeholder="enter your email">
+  <button>Submit</button>
+</form>
+
+<p>{{ isFormSubmitted }}</p>
