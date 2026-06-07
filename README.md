@@ -62,3 +62,4 @@ Angular Tutorial Git Branch Till Now:
 1-interpolation
 2-angular-cli-commands
 3-components
+4-custom-components
