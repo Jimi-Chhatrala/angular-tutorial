@@ -6,12 +6,39 @@
 <button (click)="showEvent($event)">Show Event</button>
 <p>Event data: {{ eventData }}</p>
 
-<input type="text" name="username" id="username" (input)="updateUsernameValue($event.target.value)">
+<input
+  type="text"
+  name="username"
+  id="username"
+  (input)="updateUsernameValue($event.target.value)"
+/>
 <p>username: {{ username }}</p>
 
 <form (submit)="handleSubmit($event)">
-  <input type="text" name="email" id="email" placeholder="enter your email">
+  <input type="text" name="email" id="email" placeholder="enter your email" />
   <button>Submit</button>
 </form>
 
 <p>{{ isFormSubmitted }}</p>
+<br /><br />
+<button (click)="handleButtonClick()">Click Me to fire click event</button>
+<br /><br />
+<input
+  (input)="onTyping($event)"
+  type="text"
+  placeholder="Write something for firing typing event"
+/>
+<br /><br />
+<input (keyup)="onKeyUp($event)" type="text" placeholder="Checking key up" />
+<br /><br />
+<div (mouseover)="onMouseHover()" (mouseleave)="onMouseLeave()" class="hover-box">
+  Hover over this text to check mouse hover
+</div>
+
+<br /><br />
+<input
+  type="text"
+  (blur)="onBlur()"
+  (focus)="onFocus()"
+  placeholder="Focus this text box to fire blur event"
+/>

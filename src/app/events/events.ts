@@ -17,7 +17,7 @@ export class Events {
   }
 
   showEvent(e: any) {
-    console.log({e});
+    console.log({ e });
     this.eventData = JSON.parse(JSON.stringify(e));
   }
 
@@ -31,5 +31,33 @@ export class Events {
     e.preventDefault();
     console.log('Form submitted');
     this.isFormSubmitted = 'Form submitted';
+  }
+
+  handleButtonClick() {
+    console.log('handleButtonClick called.');
+  }
+
+  onTyping(event: any) {
+    console.log('Value:', event.target.value);
+  }
+
+  onKeyUp(event: any) {
+    console.log('Key up event', event.key);
+  }
+
+  onMouseHover() {
+    console.log('onMouseHover called');
+  }
+
+  onMouseLeave() {
+    console.log('onMouseLeave called');
+  }
+
+  onBlur() {
+    console.log('onBlur called');
+  }
+
+  onFocus() {
+    console.log('onFocus called.');
   }
 }
