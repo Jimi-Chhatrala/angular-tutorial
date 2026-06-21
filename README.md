@@ -75,3 +75,4 @@ Angular Tutorial Git Branch Till Now:
 4-custom-components
 5-property-binding
 6-event-binding
+7-counter-app
