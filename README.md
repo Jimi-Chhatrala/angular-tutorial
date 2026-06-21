@@ -58,6 +58,16 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
+git commands
+
+git switch main
+git pull origin main
+git switch -c 6-branch-name
+
+git add .
+git commit -m "Add login page"
+git push -u origin feature/login-page
+
 Angular Tutorial Git Branch Till Now:
 1-interpolation
 2-angular-cli-commands
