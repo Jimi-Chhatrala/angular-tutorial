@@ -77,3 +77,4 @@ Angular Tutorial Git Branch Till Now:
 6-event-binding
 7-counter-app
 8-get-set-value
+9-css-styling-ways
