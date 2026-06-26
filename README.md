@@ -78,3 +78,4 @@ Angular Tutorial Git Branch Till Now:
 7-counter-app
 8-get-set-value
 9-css-styling-ways
+10-if-else
