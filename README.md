@@ -82,3 +82,4 @@ Angular Tutorial Git Branch Till Now:
 11-else-if
 12-switch-case
 13-loops
+14-for-loop-contextual-variables
