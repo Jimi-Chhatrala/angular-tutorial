@@ -83,3 +83,4 @@ Angular Tutorial Git Branch Till Now:
 12-switch-case
 13-loops
 14-for-loop-contextual-variables
+15-signals
