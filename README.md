@@ -80,3 +80,4 @@ Angular Tutorial Git Branch Till Now:
 9-css-styling-ways
 10-if-else
 11-else-if
+12-switch-case
