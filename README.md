@@ -88,3 +88,4 @@ Angular Tutorial Git Branch Till Now:
 17-computed-signals
 18-effects
 19-built-in-pipes
+20-custom-pipes
