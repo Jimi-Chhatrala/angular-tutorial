@@ -86,3 +86,4 @@ Angular Tutorial Git Branch Till Now:
 15-signals
 16-signals-with-data-types
 17-computed-signals
+18-effects
