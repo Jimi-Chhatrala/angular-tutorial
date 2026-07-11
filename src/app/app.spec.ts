@@ -80,6 +80,23 @@ describe('App', () => {
     expect(app.selectedTodoIds()).toEqual([]);
   });
 
+  it('restores a deleted todo when undo is used before the timeout', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.todos.set([{ id: 1, text: 'First', done: false }]);
+
+    app.deleteTodo(1);
+
+    expect(app.todos()).toEqual([]);
+    expect(app.pendingDeletedTodo()?.text).toBe('First');
+
+    app.undoDelete();
+
+    expect(app.todos()).toEqual([{ id: 1, text: 'First', done: false }]);
+    expect(app.pendingDeletedTodo()).toBeNull();
+  });
+
   it('selects all visible todos when the select-all control is used', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;

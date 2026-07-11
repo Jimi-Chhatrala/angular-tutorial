@@ -117,6 +117,13 @@
       </div>
     }
 
+    @if (undoNotice()) {
+      <div class="undo-banner" role="status">
+        <span>{{ undoNotice() }}</span>
+        <button class="undo-btn" type="button" (click)="undoDelete()">Undo</button>
+      </div>
+    }
+
     <div class="reorder-helper" [class.active]="reorderMode()">
       <span class="reorder-helper-icon">↕</span>
       {{ reorderMode()

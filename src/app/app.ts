@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, OnDestroy, signal } from '@angular/core';
 import { DemoRowComponent } from './demo-row/demo-row';
 
 type TodoFilter = 'all' | 'active' | 'completed';
@@ -29,7 +29,7 @@ interface TrackingDemoItem {
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
+export class App implements OnDestroy {
   protected readonly title = signal('angular-tutorial');
 
   newTodo = signal('');
@@ -44,12 +44,16 @@ export class App {
   showDemo = signal(false);
   reorderMode = signal(false);
   selectedTodoIds = signal<number[]>([]);
+  pendingDeletedTodo = signal<TodoItem | null>(null);
+  pendingDeletedIndex = signal<number | null>(null);
+  undoNotice = signal('');
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
   draggedTodoId = signal<number | null>(null);
   dropTargetId = signal<number | null>(null);
   touchSourceId = signal<number | null>(null);
   touchDropTargetId = signal<number | null>(null);
+  private undoTimeoutId: ReturnType<typeof window.setTimeout> | null = null;
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -211,8 +215,53 @@ export class App {
   }
 
   deleteTodo(id: number) {
-    this.todos.update((list) => list.filter((item) => item.id !== id));
+    const currentTodos = this.todos();
+    const todoToDelete = currentTodos.find((item) => item.id === id);
+
+    if (!todoToDelete) {
+      return;
+    }
+
+    const deletedIndex = currentTodos.findIndex((item) => item.id === id);
+
+    this.clearUndoTimeout();
+    this.todos.set(currentTodos.filter((item) => item.id !== id));
     this.persistTodos();
+    this.pendingDeletedTodo.set(todoToDelete);
+    this.pendingDeletedIndex.set(deletedIndex);
+    this.undoNotice.set(`Deleted "${todoToDelete.text}". You can undo for 4 seconds.`);
+    this.undoTimeoutId = window.setTimeout(() => {
+      this.pendingDeletedTodo.set(null);
+      this.pendingDeletedIndex.set(null);
+      this.undoNotice.set('');
+      this.undoTimeoutId = null;
+    }, 4000);
+  }
+
+  undoDelete() {
+    const todoToRestore = this.pendingDeletedTodo();
+    const restoredIndex = this.pendingDeletedIndex();
+
+    if (!todoToRestore) {
+      return;
+    }
+
+    this.clearUndoTimeout();
+    this.todos.update((list) => {
+      const updated = [...list];
+
+      if (restoredIndex !== null && restoredIndex >= 0 && restoredIndex <= updated.length) {
+        updated.splice(restoredIndex, 0, todoToRestore);
+      } else {
+        updated.push(todoToRestore);
+      }
+
+      return updated;
+    });
+    this.persistTodos();
+    this.pendingDeletedTodo.set(null);
+    this.pendingDeletedIndex.set(null);
+    this.undoNotice.set('');
   }
 
   startEditing(todo: TodoItem) {
@@ -409,6 +458,17 @@ export class App {
     this.reorderTodos(draggedId, targetId);
     this.touchSourceId.set(null);
     this.touchDropTargetId.set(null);
+  }
+
+  ngOnDestroy() {
+    this.clearUndoTimeout();
+  }
+
+  private clearUndoTimeout() {
+    if (this.undoTimeoutId !== null) {
+      window.clearTimeout(this.undoTimeoutId);
+      this.undoTimeoutId = null;
+    }
   }
 
   private loadTodos() {
