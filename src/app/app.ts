@@ -29,6 +29,8 @@ export class App {
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
+  editingTodoId = signal<number | null>(null);
+  editingText = signal('');
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -82,6 +84,30 @@ export class App {
   deleteTodo(id: number) {
     this.todos.update((list) => list.filter((item) => item.id !== id));
     this.persistTodos();
+  }
+
+  startEditing(todo: TodoItem) {
+    this.editingTodoId.set(todo.id);
+    this.editingText.set(todo.text);
+  }
+
+  cancelEditing() {
+    this.editingTodoId.set(null);
+    this.editingText.set('');
+  }
+
+  saveEdit(id: number) {
+    const text = this.editingText().trim();
+
+    if (!text) {
+      this.deleteTodo(id);
+      this.cancelEditing();
+      return;
+    }
+
+    this.todos.update((list) => list.map((item) => (item.id === id ? { ...item, text } : item)));
+    this.persistTodos();
+    this.cancelEditing();
   }
 
   setFilter(filter: TodoFilter) {

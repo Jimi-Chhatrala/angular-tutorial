@@ -130,6 +130,20 @@
   border: 1px solid #e2e8f0;
 }
 
+.todo-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.todo-edit-input {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+}
+
 .todo-item.done {
   opacity: 0.75;
 }
@@ -162,6 +176,36 @@
 .todo-item.done .todo-text {
   color: #94a3b8;
   text-decoration: line-through;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.edit-btn,
+.save-btn,
+.cancel-btn,
+.delete-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.save-btn {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.cancel-btn {
+  background: #fef2f2;
+  color: #b91c1c;
 }
 
 .delete-btn {

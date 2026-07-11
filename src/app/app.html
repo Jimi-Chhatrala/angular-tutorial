@@ -78,11 +78,32 @@
       <ul class="todo-list">
         @for (todo of visibleTodos(); track todo.id) {
           <li class="todo-item" [class.done]="todo.done">
-            <div class="todo-content" (click)="toggleTodo(todo.id)">
-              <span class="todo-index">{{ $index + 1 }}</span>
-              <span class="todo-text">{{ todo.text }}</span>
-            </div>
-            <button class="delete-btn" type="button" (click)="deleteTodo(todo.id)">Delete</button>
+            @if (editingTodoId() === todo.id) {
+              <div class="todo-edit-row">
+                <input
+                  class="todo-edit-input"
+                  type="text"
+                  [value]="editingText()"
+                  (input)="editingText.set($event.target.value)"
+                  (keydown.enter)="saveEdit(todo.id)"
+                  (keydown.escape)="cancelEditing()"
+                  aria-label="Edit todo"
+                />
+                <div class="todo-actions">
+                  <button class="save-btn" type="button" (click)="saveEdit(todo.id)">Save</button>
+                  <button class="cancel-btn" type="button" (click)="cancelEditing()">Cancel</button>
+                </div>
+              </div>
+            } @else {
+              <div class="todo-content" (click)="toggleTodo(todo.id)">
+                <span class="todo-index">{{ $index + 1 }}</span>
+                <span class="todo-text">{{ todo.text }}</span>
+              </div>
+              <div class="todo-actions">
+                <button class="edit-btn" type="button" (click)="startEditing(todo); $event.stopPropagation()">Edit</button>
+                <button class="delete-btn" type="button" (click)="deleteTodo(todo.id); $event.stopPropagation()">Delete</button>
+              </div>
+            }
           </li>
         }
       </ul>
