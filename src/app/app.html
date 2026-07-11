@@ -26,6 +26,45 @@
       <span>{{ completedCount() }} completed</span>
     </div>
 
+    <section class="tracking-demo">
+      <div class="tracking-demo-header">
+        <h2>Live demo: tracking by $index vs tracking by id</h2>
+        <p>Delete the first item in each list to see how Angular reacts.</p>
+      </div>
+
+      <div class="demo-grid">
+        <div class="demo-card">
+          <div class="demo-card-header">
+            <h3>Track by $index</h3>
+            <button class="demo-btn" type="button" (click)="removeFirstIndexItem()">Delete first</button>
+          </div>
+
+          <ul class="demo-list">
+            @for (item of indexTrackingItems(); track $index) {
+              <li>
+                <app-demo-row [label]="item.label" [note]="item.note" [badge]="item.badge" [itemId]="item.id"></app-demo-row>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-card-header">
+            <h3>Track by item.id</h3>
+            <button class="demo-btn" type="button" (click)="removeFirstIdItem()">Delete first</button>
+          </div>
+
+          <ul class="demo-list">
+            @for (item of idTrackingItems(); track item.id) {
+              <li>
+                <app-demo-row [label]="item.label" [note]="item.note" [badge]="item.badge" [itemId]="item.id"></app-demo-row>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
     @if (todoCount() === 0) {
       <div class="empty-state">No tasks yet. Add your first one above.</div>
     } @else {
