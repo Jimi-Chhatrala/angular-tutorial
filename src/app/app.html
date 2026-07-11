@@ -142,7 +142,14 @@
     } @else {
       <ul class="todo-list">
         @for (todo of visibleTodos(); track todo.id) {
-          <li class="todo-item" [class.done]="todo.done">
+          <li
+            class="todo-item"
+            [class.done]="todo.done"
+            draggable="true"
+            (dragstart)="draggedTodoId.set(todo.id)"
+            (dragover)="$event.preventDefault()"
+            (drop)="dropTodo(todo.id); $event.preventDefault()"
+          >
             @if (editingTodoId() === todo.id) {
               <div class="todo-edit-row">
                 <input
@@ -161,6 +168,7 @@
               </div>
             } @else {
               <div class="todo-content" (click)="toggleTodo(todo.id)">
+                <span class="todo-drag-handle" aria-hidden="true">⋮⋮</span>
                 <span class="todo-index">{{ $index + 1 }}</span>
                 <div class="todo-text-block">
                   <span class="todo-text">{{ todo.text }}</span>

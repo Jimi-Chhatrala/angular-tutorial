@@ -48,6 +48,21 @@ describe('App', () => {
     expect(compiled.textContent).toContain('No completed tasks yet.');
   });
 
+  it('reorders todos when a dragged item is dropped on another item', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.todos.set([
+      { id: 1, text: 'First', done: false },
+      { id: 2, text: 'Second', done: false },
+      { id: 3, text: 'Third', done: false },
+    ]);
+
+    app.reorderTodos(1, 3);
+
+    expect(app.todos().map((todo) => todo.id)).toEqual([2, 3, 1]);
+  });
+
   it('adds a todo with a due date and priority', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

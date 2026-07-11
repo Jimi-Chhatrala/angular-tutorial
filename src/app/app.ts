@@ -44,6 +44,7 @@ export class App {
   showDemo = signal(false);
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
+  draggedTodoId = signal<number | null>(null);
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -243,6 +244,36 @@ export class App {
     });
 
     this.persistTodos();
+  }
+
+  reorderTodos(fromId: number, toId: number) {
+    this.todos.update((list) => {
+      const fromIndex = list.findIndex((item) => item.id === fromId);
+      const toIndex = list.findIndex((item) => item.id === toId);
+
+      if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) {
+        return list;
+      }
+
+      const updated = [...list];
+      const [movedItem] = updated.splice(fromIndex, 1);
+      updated.splice(toIndex, 0, movedItem);
+      return updated;
+    });
+
+    this.persistTodos();
+  }
+
+  dropTodo(targetId: number) {
+    const draggedId = this.draggedTodoId();
+
+    if (draggedId === null || draggedId === targetId) {
+      this.draggedTodoId.set(null);
+      return;
+    }
+
+    this.reorderTodos(draggedId, targetId);
+    this.draggedTodoId.set(null);
   }
 
   private loadTodos() {
