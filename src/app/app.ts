@@ -30,6 +30,7 @@ export class App {
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
   searchTerm = signal('');
+  showDemo = signal(false);
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
 
@@ -128,6 +129,10 @@ export class App {
   clearCompleted() {
     this.todos.update((list) => list.filter((todo) => !todo.done));
     this.persistTodos();
+  }
+
+  toggleDemo() {
+    this.showDemo.update((value) => !value);
   }
 
   moveTodoUp(id: number) {
