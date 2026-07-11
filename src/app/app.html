@@ -18,6 +18,21 @@
         aria-label="New todo"
       />
 
+      <input
+        class="todo-date-input"
+        type="date"
+        name="dueDate"
+        [value]="newDueDate()"
+        (input)="updateDueDate($event)"
+        aria-label="Due date"
+      />
+
+      <select class="todo-priority-select" name="priority" [value]="newPriority()" (change)="updatePriority($event)">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+
       <button class="add-btn" type="button" (click)="addTodo()">Add</button>
     </div>
 
@@ -130,7 +145,15 @@
             } @else {
               <div class="todo-content" (click)="toggleTodo(todo.id)">
                 <span class="todo-index">{{ $index + 1 }}</span>
-                <span class="todo-text">{{ todo.text }}</span>
+                <div class="todo-text-block">
+                  <span class="todo-text">{{ todo.text }}</span>
+                  <div class="todo-meta">
+                    @if (todo.dueDate) {
+                      <span class="todo-meta-item">Due: {{ todo.dueDate }}</span>
+                    }
+                    <span class="todo-meta-item todo-priority" [class.high]="todo.priority === 'high'" [class.low]="todo.priority === 'low'">{{ getPriorityLabel(todo.priority) }}</span>
+                  </div>
+                </div>
               </div>
               <div class="todo-actions">
                 <button class="move-btn" type="button" (click)="moveTodoUp(todo.id); $event.stopPropagation()">↑</button>

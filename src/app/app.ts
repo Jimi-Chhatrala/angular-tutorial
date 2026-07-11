@@ -3,10 +3,14 @@ import { DemoRowComponent } from './demo-row/demo-row';
 
 type TodoFilter = 'all' | 'active' | 'completed';
 
+type TodoPriority = 'low' | 'medium' | 'high';
+
 interface TodoItem {
   id: number;
   text: string;
   done: boolean;
+  dueDate?: string;
+  priority?: TodoPriority;
 }
 
 interface TrackingDemoItem {
@@ -26,6 +30,8 @@ export class App {
   protected readonly title = signal('angular-tutorial');
 
   newTodo = signal('');
+  newDueDate = signal('');
+  newPriority = signal<TodoPriority>('medium');
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
@@ -82,10 +88,32 @@ export class App {
     const id = this.todoCounter() + 1;
     this.todoCounter.set(id);
 
-    this.todos.update((list) => [...list, { id, text, done: false }]);
+    this.todos.update((list) => [
+      ...list,
+      {
+        id,
+        text,
+        done: false,
+        dueDate: this.newDueDate().trim() || undefined,
+        priority: this.newPriority(),
+      },
+    ]);
     this.persistTodos();
     this.searchTerm.set('');
     this.newTodo.set('');
+    this.newDueDate.set('');
+    this.newPriority.set('medium');
+  }
+
+  updateDueDate(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    this.newDueDate.set(target?.value ?? '');
+  }
+
+  updatePriority(event: Event) {
+    const target = event.target as HTMLSelectElement | null;
+    const value = (target?.value as TodoPriority | undefined) ?? 'medium';
+    this.newPriority.set(value);
   }
 
   toggleTodo(id: number) {
@@ -120,6 +148,17 @@ export class App {
     this.todos.update((list) => list.map((item) => (item.id === id ? { ...item, text } : item)));
     this.persistTodos();
     this.cancelEditing();
+  }
+
+  getPriorityLabel(priority?: TodoPriority) {
+    switch (priority) {
+      case 'high':
+        return 'High';
+      case 'low':
+        return 'Low';
+      default:
+        return 'Medium';
+    }
   }
 
   setFilter(filter: TodoFilter) {

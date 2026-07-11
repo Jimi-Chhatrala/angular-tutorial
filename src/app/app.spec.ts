@@ -47,4 +47,28 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('No completed tasks yet.');
   });
+
+  it('adds a todo with a due date and priority', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+
+    const input = fixture.nativeElement.querySelector('input.todo-input') as HTMLInputElement;
+    const dueInput = fixture.nativeElement.querySelector('input[name="dueDate"]') as HTMLInputElement;
+    const prioritySelect = fixture.nativeElement.querySelector('select[name="priority"]') as HTMLSelectElement;
+    const addButton = fixture.nativeElement.querySelector('button.add-btn') as HTMLButtonElement;
+
+    input.value = 'Plan sprint';
+    input.dispatchEvent(new Event('input'));
+    dueInput.value = '2026-07-15';
+    dueInput.dispatchEvent(new Event('input'));
+    prioritySelect.value = 'high';
+    prioritySelect.dispatchEvent(new Event('change'));
+    addButton.click();
+
+    fixture.detectChanges();
+
+    const meta = fixture.nativeElement.querySelector('.todo-meta');
+    expect(meta?.textContent).toContain('Due: 2026-07-15');
+    expect(meta?.textContent).toContain('High');
+  });
 });
