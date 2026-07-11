@@ -56,6 +56,15 @@
       <button class="filter-btn secondary" type="button" (click)="clearCompleted()">Clear completed</button>
     </div>
 
+    <div class="filter-row category-filter-row">
+      <button class="filter-btn" [class.active]="categoryFilter() === 'all'" type="button" (click)="setCategoryFilter('all')">All categories</button>
+      <button class="filter-btn" [class.active]="categoryFilter() === 'work'" type="button" (click)="setCategoryFilter('work')">Work</button>
+      <button class="filter-btn" [class.active]="categoryFilter() === 'personal'" type="button" (click)="setCategoryFilter('personal')">Personal</button>
+      <button class="filter-btn" [class.active]="categoryFilter() === 'study'" type="button" (click)="setCategoryFilter('study')">Study</button>
+      <button class="filter-btn" [class.active]="categoryFilter() === 'errands'" type="button" (click)="setCategoryFilter('errands')">Errands</button>
+      <button class="filter-btn" [class.active]="categoryFilter() === 'other'" type="button" (click)="setCategoryFilter('other')">Other</button>
+    </div>
+
     @if (todoCount() >= 2) {
       <div class="search-row">
         <input

@@ -2,6 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { DemoRowComponent } from './demo-row/demo-row';
 
 type TodoFilter = 'all' | 'active' | 'completed';
+type TodoCategoryFilter = TodoCategory | 'all';
 
 type TodoPriority = 'low' | 'medium' | 'high';
 type TodoCategory = 'work' | 'personal' | 'study' | 'errands' | 'other';
@@ -38,6 +39,7 @@ export class App {
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
+  categoryFilter = signal<TodoCategoryFilter>('all');
   searchTerm = signal('');
   showDemo = signal(false);
   editingTodoId = signal<number | null>(null);
@@ -72,11 +74,20 @@ export class App {
       }
     })();
 
+    const filteredByCategory = (() => {
+      const category = this.categoryFilter();
+      if (category === 'all') {
+        return filteredByStatus;
+      }
+
+      return filteredByStatus.filter((todo) => todo.category === category);
+    })();
+
     if (!term) {
-      return filteredByStatus;
+      return filteredByCategory;
     }
 
-    return filteredByStatus.filter((todo) => todo.text.toLowerCase().includes(term));
+    return filteredByCategory.filter((todo) => todo.text.toLowerCase().includes(term));
   });
 
   constructor() {
@@ -189,6 +200,10 @@ export class App {
 
   setFilter(filter: TodoFilter) {
     this.filter.set(filter);
+  }
+
+  setCategoryFilter(category: TodoCategoryFilter) {
+    this.categoryFilter.set(category);
   }
 
   clearCompleted() {
