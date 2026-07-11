@@ -63,6 +63,39 @@ describe('App', () => {
     expect(app.todos().map((todo) => todo.id)).toEqual([2, 3, 1]);
   });
 
+  it('bulk deletes the selected todos', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.todos.set([
+      { id: 1, text: 'First', done: false },
+      { id: 2, text: 'Second', done: false },
+    ]);
+
+    app.toggleTodoSelection(1);
+    app.toggleTodoSelection(2);
+    app.bulkDeleteSelected();
+
+    expect(app.todos()).toEqual([]);
+    expect(app.selectedTodoIds()).toEqual([]);
+  });
+
+  it('selects all visible todos when the select-all control is used', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.todos.set([
+      { id: 1, text: 'First', done: false },
+      { id: 2, text: 'Second', done: false },
+      { id: 3, text: 'Third', done: true },
+    ]);
+    app.filter.set('active');
+
+    app.toggleSelectAllVisible();
+
+    expect(app.selectedTodoIds()).toEqual([1, 2]);
+  });
+
   it('adds a todo with a due date and priority', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

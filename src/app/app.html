@@ -91,6 +91,32 @@
         {{ reorderMode() ? 'Exit reorder mode' : 'Enter reorder mode' }}
       </button>
     </div>
+
+    @if (selectedTodoIds().length > 0) {
+      <div class="bulk-actions-row">
+        <span>{{ selectedTodoIds().length }} selected</span>
+        <div class="bulk-actions">
+          <button class="bulk-btn complete" type="button" (click)="bulkMarkSelectedComplete()">Complete</button>
+          <button class="bulk-btn delete" type="button" (click)="bulkDeleteSelected()">Delete</button>
+          <button class="bulk-btn clear" type="button" (click)="clearSelection()">Clear</button>
+        </div>
+      </div>
+    }
+
+    @if (visibleTodos().length > 0) {
+      <div class="select-all-row">
+        <label class="select-all-control">
+          <input
+            class="todo-select"
+            type="checkbox"
+            [checked]="areAllVisibleTodosSelected()"
+            (change)="toggleSelectAllVisible()"
+          />
+          <span>Select all visible</span>
+        </label>
+      </div>
+    }
+
     <div class="reorder-helper" [class.active]="reorderMode()">
       <span class="reorder-helper-icon">↕</span>
       {{ reorderMode()
@@ -193,6 +219,13 @@
               </div>
             } @else {
               <div class="todo-content" (click)="toggleTodo(todo.id)">
+                <input
+                  class="todo-select"
+                  type="checkbox"
+                  [checked]="isTodoSelected(todo.id)"
+                  (click)="$event.stopPropagation(); toggleTodoSelection(todo.id)"
+                  aria-label="Select todo"
+                />
                 <span class="todo-drag-handle" aria-hidden="true">⋮⋮</span>
                 <span class="todo-index">{{ $index + 1 }}</span>
                 <div class="todo-text-block">
@@ -209,7 +242,6 @@
               <div class="todo-actions">
                 <button class="move-btn" type="button" (click)="moveTodoUp(todo.id); $event.stopPropagation()">↑</button>
                 <button class="move-btn" type="button" (click)="moveTodoDown(todo.id); $event.stopPropagation()">↓</button>
-                <button class="move-btn" type="button" (click)="reorderTodos(todo.id, todo.id); $event.stopPropagation()">⟳</button>
                 <button class="edit-btn" type="button" (click)="startEditing(todo); $event.stopPropagation()">Edit</button>
                 <button class="delete-btn" type="button" (click)="deleteTodo(todo.id); $event.stopPropagation()">Delete</button>
               </div>

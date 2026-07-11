@@ -43,6 +43,7 @@ export class App {
   searchTerm = signal('');
   showDemo = signal(false);
   reorderMode = signal(false);
+  selectedTodoIds = signal<number[]>([]);
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
   draggedTodoId = signal<number | null>(null);
@@ -146,6 +147,67 @@ export class App {
   toggleTodo(id: number) {
     this.todos.update((list) => list.map((item) => (item.id === id ? { ...item, done: !item.done } : item)));
     this.persistTodos();
+  }
+
+  toggleTodoSelection(id: number) {
+    this.selectedTodoIds.update((selectedIds) =>
+      selectedIds.includes(id) ? selectedIds.filter((selectedId) => selectedId !== id) : [...selectedIds, id],
+    );
+  }
+
+  isTodoSelected(id: number) {
+    return this.selectedTodoIds().includes(id);
+  }
+
+  areAllVisibleTodosSelected() {
+    const visibleIds = this.visibleTodos().map((todo) => todo.id);
+    return visibleIds.length > 0 && visibleIds.every((id) => this.selectedTodoIds().includes(id));
+  }
+
+  toggleSelectAllVisible() {
+    const visibleIds = this.visibleTodos().map((todo) => todo.id);
+    const selectedIds = this.selectedTodoIds();
+
+    if (visibleIds.length === 0) {
+      return;
+    }
+
+    const allVisibleSelected = visibleIds.every((id) => selectedIds.includes(id));
+
+    if (allVisibleSelected) {
+      this.selectedTodoIds.set(selectedIds.filter((id) => !visibleIds.includes(id)));
+      return;
+    }
+
+    this.selectedTodoIds.set([...new Set([...selectedIds, ...visibleIds])]);
+  }
+
+  bulkMarkSelectedComplete() {
+    const selectedIds = this.selectedTodoIds();
+
+    if (selectedIds.length === 0) {
+      return;
+    }
+
+    this.todos.update((list) => list.map((todo) => (selectedIds.includes(todo.id) ? { ...todo, done: true } : todo)));
+    this.persistTodos();
+    this.selectedTodoIds.set([]);
+  }
+
+  bulkDeleteSelected() {
+    const selectedIds = this.selectedTodoIds();
+
+    if (selectedIds.length === 0) {
+      return;
+    }
+
+    this.todos.update((list) => list.filter((todo) => !selectedIds.includes(todo.id)));
+    this.persistTodos();
+    this.selectedTodoIds.set([]);
+  }
+
+  clearSelection() {
+    this.selectedTodoIds.set([]);
   }
 
   deleteTodo(id: number) {
