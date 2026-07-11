@@ -4,6 +4,7 @@ import { DemoRowComponent } from './demo-row/demo-row';
 type TodoFilter = 'all' | 'active' | 'completed';
 
 type TodoPriority = 'low' | 'medium' | 'high';
+type TodoCategory = 'work' | 'personal' | 'study' | 'errands' | 'other';
 
 interface TodoItem {
   id: number;
@@ -11,6 +12,7 @@ interface TodoItem {
   done: boolean;
   dueDate?: string;
   priority?: TodoPriority;
+  category?: TodoCategory;
 }
 
 interface TrackingDemoItem {
@@ -32,6 +34,7 @@ export class App {
   newTodo = signal('');
   newDueDate = signal('');
   newPriority = signal<TodoPriority>('medium');
+  newCategory = signal<TodoCategory>('other');
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
@@ -96,6 +99,7 @@ export class App {
         done: false,
         dueDate: this.newDueDate().trim() || undefined,
         priority: this.newPriority(),
+        category: this.newCategory(),
       },
     ]);
     this.persistTodos();
@@ -103,6 +107,7 @@ export class App {
     this.newTodo.set('');
     this.newDueDate.set('');
     this.newPriority.set('medium');
+    this.newCategory.set('other');
   }
 
   updateDueDate(event: Event) {
@@ -114,6 +119,12 @@ export class App {
     const target = event.target as HTMLSelectElement | null;
     const value = (target?.value as TodoPriority | undefined) ?? 'medium';
     this.newPriority.set(value);
+  }
+
+  updateCategory(event: Event) {
+    const target = event.target as HTMLSelectElement | null;
+    const value = (target?.value as TodoCategory | undefined) ?? 'other';
+    this.newCategory.set(value);
   }
 
   toggleTodo(id: number) {
@@ -158,6 +169,21 @@ export class App {
         return 'Low';
       default:
         return 'Medium';
+    }
+  }
+
+  getCategoryLabel(category?: TodoCategory) {
+    switch (category) {
+      case 'work':
+        return 'Work';
+      case 'personal':
+        return 'Personal';
+      case 'study':
+        return 'Study';
+      case 'errands':
+        return 'Errands';
+      default:
+        return 'Other';
     }
   }
 

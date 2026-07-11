@@ -33,6 +33,14 @@
         <option value="high">High</option>
       </select>
 
+      <select class="todo-category-select" name="category" [value]="newCategory()" (change)="updateCategory($event)">
+        <option value="work">Work</option>
+        <option value="personal">Personal</option>
+        <option value="study">Study</option>
+        <option value="errands">Errands</option>
+        <option value="other">Other</option>
+      </select>
+
       <button class="add-btn" type="button" (click)="addTodo()">Add</button>
     </div>
 
@@ -152,6 +160,7 @@
                       <span class="todo-meta-item">Due: {{ todo.dueDate }}</span>
                     }
                     <span class="todo-meta-item todo-priority" [class.high]="todo.priority === 'high'" [class.low]="todo.priority === 'low'">{{ getPriorityLabel(todo.priority) }}</span>
+                    <span class="todo-meta-item todo-category">{{ getCategoryLabel(todo.category) }}</span>
                   </div>
                 </div>
               </div>
