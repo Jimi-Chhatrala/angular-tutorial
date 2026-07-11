@@ -13,28 +13,30 @@
         id="todo"
         [value]="newTodo()"
         (input)="newTodo.set($event.target.value)"
+        (keydown.enter)="addTodo()"
         placeholder="Enter a task"
+        aria-label="New todo"
       />
 
-      <button class="add-btn" (click)="addTodo()">Add</button>
+      <button class="add-btn" type="button" (click)="addTodo()">Add</button>
     </div>
 
     <div class="todo-summary">
-      <span>{{ todos().length }} task{{ todos().length === 1 ? '' : 's' }}</span>
-      <span>{{ todos().filter((todo) => todo.done).length }} completed</span>
+      <span>{{ todoCount() }} task{{ todoCount() === 1 ? '' : 's' }}</span>
+      <span>{{ completedCount() }} completed</span>
     </div>
 
-    @if (todos().length === 0) {
+    @if (todoCount() === 0) {
       <div class="empty-state">No tasks yet. Add your first one above.</div>
     } @else {
       <ul class="todo-list">
-        @for (todo of todos(); track $index) {
+        @for (todo of todos(); track todo.id) {
           <li class="todo-item" [class.done]="todo.done">
-            <div class="todo-content" (click)="toggleTodo($index)">
+            <div class="todo-content" (click)="toggleTodo(todo.id)">
               <span class="todo-index">{{ $index + 1 }}</span>
               <span class="todo-text">{{ todo.text }}</span>
             </div>
-            <button class="delete-btn" (click)="deleteTodo($index)">Delete</button>
+            <button class="delete-btn" type="button" (click)="deleteTodo(todo.id)">Delete</button>
           </li>
         }
       </ul>

@@ -1,4 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
+
+interface TodoItem {
+  id: number;
+  text: string;
+  done: boolean;
+}
 
 @Component({
   selector: 'app-root',
@@ -10,26 +16,29 @@ export class App {
   protected readonly title = signal('angular-tutorial');
 
   newTodo = signal('');
+  todoCounter = signal(0);
+  todos = signal<TodoItem[]>([]);
 
-  todos = signal<{ text: string; done: boolean }[]>([]);
+  readonly todoCount = computed(() => this.todos().length);
+  readonly completedCount = computed(() => this.todos().filter((todo) => todo.done).length);
 
   addTodo() {
     const text = this.newTodo().trim();
 
     if (!text) return;
 
-    this.todos.update((list) => [...list, { text, done: false }]);
+    const id = this.todoCounter() + 1;
+    this.todoCounter.set(id);
 
+    this.todos.update((list) => [...list, { id, text, done: false }]);
     this.newTodo.set('');
   }
 
-  toggleTodo(index: number) {
-    this.todos.update((list) =>
-      list.map((item, i) => (i === index ? { ...item, done: !item.done } : item)),
-    );
+  toggleTodo(id: number) {
+    this.todos.update((list) => list.map((item) => (item.id === id ? { ...item, done: !item.done } : item)));
   }
 
-  deleteTodo(index: number) {
-    this.todos.update((list) => list.filter((_, i) => i !== index));
+  deleteTodo(id: number) {
+    this.todos.update((list) => list.filter((item) => item.id !== id));
   }
 }
