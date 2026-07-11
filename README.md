@@ -90,3 +90,4 @@ Angular Tutorial Git Branch Till Now:
 19-built-in-pipes
 20-custom-pipes
 21-signal-deep-dive
+22-two-way-binding
