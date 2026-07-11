@@ -130,6 +130,36 @@
   margin-bottom: 0.75rem;
 }
 
+.reorder-helper {
+  color: #475569;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.reorder-helper.active {
+  color: #2563eb;
+}
+
+.reorder-helper.active .reorder-helper-icon {
+  background: #2563eb;
+  color: white;
+}
+
+.reorder-helper-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
 .demo-toggle-btn {
   border: 1px solid #2563eb;
   border-radius: 999px;
@@ -138,6 +168,16 @@
   padding: 0.45rem 0.8rem;
   cursor: pointer;
   font-weight: 600;
+}
+
+.demo-toggle-btn.active {
+  background: #1d4ed8;
+  color: white;
+  border-color: #1e40af;
+}
+
+.todo-item.reorder-enabled {
+  cursor: move;
 }
 
 .filter-btn {

@@ -42,6 +42,7 @@ export class App {
   categoryFilter = signal<TodoCategoryFilter>('all');
   searchTerm = signal('');
   showDemo = signal(false);
+  reorderMode = signal(false);
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
   draggedTodoId = signal<number | null>(null);
@@ -219,6 +220,23 @@ export class App {
     this.showDemo.update((value) => !value);
   }
 
+  toggleReorderMode() {
+    this.reorderMode.update((value) => {
+      if (value) {
+        this.clearReorderMarkers();
+      }
+
+      return !value;
+    });
+  }
+
+  clearReorderMarkers() {
+    this.draggedTodoId.set(null);
+    this.dropTargetId.set(null);
+    this.touchSourceId.set(null);
+    this.touchDropTargetId.set(null);
+  }
+
   moveTodoUp(id: number) {
     this.todos.update((list) => {
       const index = list.findIndex((item) => item.id === id);
@@ -271,17 +289,19 @@ export class App {
     const draggedId = this.draggedTodoId();
 
     if (draggedId === null || draggedId === targetId) {
-      this.draggedTodoId.set(null);
-      this.dropTargetId.set(null);
+      this.clearReorderMarkers();
       return;
     }
 
     this.reorderTodos(draggedId, targetId);
-    this.draggedTodoId.set(null);
-    this.dropTargetId.set(null);
+    this.clearReorderMarkers();
   }
 
   setDropTarget(id: number) {
+    if (!this.reorderMode()) {
+      return;
+    }
+
     this.dropTargetId.set(id);
   }
 
@@ -292,10 +312,18 @@ export class App {
   }
 
   selectTodoForTouch(id: number) {
+    if (!this.reorderMode()) {
+      return;
+    }
+
     this.touchSourceId.set(id);
   }
 
   setTouchDropTarget(event: TouchEvent, id: number) {
+    if (!this.reorderMode()) {
+      return;
+    }
+
     event.stopPropagation();
     if (this.touchSourceId() !== null && this.touchSourceId() !== id) {
       this.touchDropTargetId.set(id);

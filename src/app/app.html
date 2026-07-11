@@ -82,6 +82,20 @@
       <button class="demo-toggle-btn" type="button" (click)="toggleDemo()">
         {{ showDemo() ? 'Hide demo' : 'Show demo' }}
       </button>
+      <button
+        class="demo-toggle-btn"
+        type="button"
+        [class.active]="reorderMode()"
+        (click)="toggleReorderMode()"
+      >
+        {{ reorderMode() ? 'Exit reorder mode' : 'Enter reorder mode' }}
+      </button>
+    </div>
+    <div class="reorder-helper" [class.active]="reorderMode()">
+      <span class="reorder-helper-icon">↕</span>
+      {{ reorderMode()
+        ? 'Drag or tap items to reorder them, then exit reorder mode when finished.'
+        : 'Enable reorder mode to move tasks using drag or touch gestures.' }}
     </div>
 
     @if (showDemo()) {
@@ -145,18 +159,20 @@
           <li
             class="todo-item"
             [class.done]="todo.done"
-            [class.reorder-active]="draggedTodoId() === todo.id"
-            [class.drop-target]="dropTargetId() === todo.id || touchDropTargetId() === todo.id"
-            [class.touch-source]="touchSourceId() === todo.id"
+            [class.reorder-active]="reorderMode() && draggedTodoId() === todo.id"
+            [class.drop-target]="reorderMode() && (dropTargetId() === todo.id || touchDropTargetId() === todo.id)"
+            [class.touch-source]="reorderMode() && touchSourceId() === todo.id"
+            [class.reorder-enabled]="reorderMode()"
             draggable="true"
-            (dragstart)="draggedTodoId.set(todo.id)"
-            (dragenter)="setDropTarget(todo.id)"
-            (dragleave)="clearDropTarget(todo.id)"
+            [attr.aria-grabbed]="reorderMode() ? draggedTodoId() === todo.id : null"
+            (dragstart)="reorderMode() && draggedTodoId.set(todo.id)"
+            (dragenter)="reorderMode() && setDropTarget(todo.id)"
+            (dragleave)="reorderMode() && clearDropTarget(todo.id)"
             (dragover)="$event.preventDefault()"
-            (drop)="dropTodo(todo.id); $event.preventDefault()"
-            (touchstart)="selectTodoForTouch(todo.id)"
-            (touchmove)="setTouchDropTarget($event, todo.id)"
-            (touchend)="commitTouchReorder(todo.id)"
+            (drop)="reorderMode() && dropTodo(todo.id); $event.preventDefault()"
+            (touchstart)="reorderMode() && selectTodoForTouch(todo.id)"
+            (touchmove)="reorderMode() && setTouchDropTarget($event, todo.id)"
+            (touchend)="reorderMode() && commitTouchReorder(todo.id)"
             (touchcancel)="cancelTouchReorder()"
           >
             @if (editingTodoId() === todo.id) {
