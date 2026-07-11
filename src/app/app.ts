@@ -45,6 +45,7 @@ export class App {
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
   draggedTodoId = signal<number | null>(null);
+  touchReorderTargetId = signal<number | null>(null);
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -274,6 +275,22 @@ export class App {
 
     this.reorderTodos(draggedId, targetId);
     this.draggedTodoId.set(null);
+  }
+
+  selectTodoForTouch(id: number) {
+    this.touchReorderTargetId.set(id);
+  }
+
+  commitTouchReorder(targetId: number) {
+    const draggedId = this.touchReorderTargetId();
+
+    if (draggedId === null || draggedId === targetId) {
+      this.touchReorderTargetId.set(null);
+      return;
+    }
+
+    this.reorderTodos(draggedId, targetId);
+    this.touchReorderTargetId.set(null);
   }
 
   private loadTodos() {
