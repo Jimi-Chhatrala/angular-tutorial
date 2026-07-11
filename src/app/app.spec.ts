@@ -35,4 +35,16 @@ describe('App', () => {
     const todoText = fixture.nativeElement.querySelector('.todo-text')?.textContent;
     expect(todoText).toContain('Buy milk');
   });
+
+  it('shows a helpful empty state when the current filter has no matching todos', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    app.todos.set([{ id: 1, text: 'Buy milk', done: false }]);
+    app.filter.set('completed');
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('No completed tasks yet.');
+  });
 });

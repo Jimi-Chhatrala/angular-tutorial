@@ -29,6 +29,7 @@ export class App {
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
   filter = signal<TodoFilter>('all');
+  searchTerm = signal('');
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
 
@@ -48,15 +49,24 @@ export class App {
   readonly completedCount = computed(() => this.todos().filter((todo) => todo.done).length);
   readonly visibleTodos = computed(() => {
     const todos = this.todos();
+    const term = this.searchTerm().trim().toLowerCase();
 
-    switch (this.filter()) {
-      case 'active':
-        return todos.filter((todo) => !todo.done);
-      case 'completed':
-        return todos.filter((todo) => todo.done);
-      default:
-        return todos;
+    const filteredByStatus = (() => {
+      switch (this.filter()) {
+        case 'active':
+          return todos.filter((todo) => !todo.done);
+        case 'completed':
+          return todos.filter((todo) => todo.done);
+        default:
+          return todos;
+      }
+    })();
+
+    if (!term) {
+      return filteredByStatus;
     }
+
+    return filteredByStatus.filter((todo) => todo.text.toLowerCase().includes(term));
   });
 
   constructor() {
@@ -73,6 +83,7 @@ export class App {
 
     this.todos.update((list) => [...list, { id, text, done: false }]);
     this.persistTodos();
+    this.searchTerm.set('');
     this.newTodo.set('');
   }
 

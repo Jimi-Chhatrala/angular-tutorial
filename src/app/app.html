@@ -33,6 +33,19 @@
       <button class="filter-btn secondary" type="button" (click)="clearCompleted()">Clear completed</button>
     </div>
 
+    @if (todoCount() >= 2) {
+      <div class="search-row">
+        <input
+          class="search-input"
+          type="text"
+          [value]="searchTerm()"
+          (input)="searchTerm.set($event.target.value)"
+          placeholder="Search todos"
+          aria-label="Search todos"
+        />
+      </div>
+    }
+
     <section class="tracking-demo">
       <div class="tracking-demo-header">
         <h2>Live demo: tracking by $index vs tracking by id</h2>
@@ -72,8 +85,20 @@
       </div>
     </section>
 
-    @if (todoCount() === 0) {
-      <div class="empty-state">No tasks yet. Add your first one above.</div>
+    @if (visibleTodos().length === 0) {
+      <div class="empty-state">
+        @if (todoCount() === 0) {
+          No tasks yet. Add your first one above.
+        } @else if (searchTerm()) {
+          No tasks match your search.
+        } @else if (filter() === 'active') {
+          No active tasks right now.
+        } @else if (filter() === 'completed') {
+          No completed tasks yet.
+        } @else {
+          No tasks match the current view.
+        }
+      </div>
     } @else {
       <ul class="todo-list">
         @for (todo of visibleTodos(); track todo.id) {
