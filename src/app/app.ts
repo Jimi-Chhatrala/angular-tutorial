@@ -1,6 +1,8 @@
 import { Component, computed, signal } from '@angular/core';
 import { DemoRowComponent } from './demo-row/demo-row';
 
+type TodoFilter = 'all' | 'active' | 'completed';
+
 interface TodoItem {
   id: number;
   text: string;
@@ -26,6 +28,7 @@ export class App {
   newTodo = signal('');
   todoCounter = signal(0);
   todos = signal<TodoItem[]>([]);
+  filter = signal<TodoFilter>('all');
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -41,6 +44,22 @@ export class App {
 
   readonly todoCount = computed(() => this.todos().length);
   readonly completedCount = computed(() => this.todos().filter((todo) => todo.done).length);
+  readonly visibleTodos = computed(() => {
+    const todos = this.todos();
+
+    switch (this.filter()) {
+      case 'active':
+        return todos.filter((todo) => !todo.done);
+      case 'completed':
+        return todos.filter((todo) => todo.done);
+      default:
+        return todos;
+    }
+  });
+
+  constructor() {
+    this.loadTodos();
+  }
 
   addTodo() {
     const text = this.newTodo().trim();
@@ -51,15 +70,46 @@ export class App {
     this.todoCounter.set(id);
 
     this.todos.update((list) => [...list, { id, text, done: false }]);
+    this.persistTodos();
     this.newTodo.set('');
   }
 
   toggleTodo(id: number) {
     this.todos.update((list) => list.map((item) => (item.id === id ? { ...item, done: !item.done } : item)));
+    this.persistTodos();
   }
 
   deleteTodo(id: number) {
     this.todos.update((list) => list.filter((item) => item.id !== id));
+    this.persistTodos();
+  }
+
+  setFilter(filter: TodoFilter) {
+    this.filter.set(filter);
+  }
+
+  clearCompleted() {
+    this.todos.update((list) => list.filter((todo) => !todo.done));
+    this.persistTodos();
+  }
+
+  private loadTodos() {
+    const stored = localStorage.getItem('todos');
+
+    if (!stored) return;
+
+    try {
+      const parsed = JSON.parse(stored) as TodoItem[];
+      this.todos.set(parsed);
+      const highestId = parsed.reduce((max, todo) => Math.max(max, todo.id), 0);
+      this.todoCounter.set(highestId);
+    } catch {
+      localStorage.removeItem('todos');
+    }
+  }
+
+  private persistTodos() {
+    localStorage.setItem('todos', JSON.stringify(this.todos()));
   }
 
   removeFirstIndexItem() {

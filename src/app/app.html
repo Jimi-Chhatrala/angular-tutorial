@@ -26,6 +26,13 @@
       <span>{{ completedCount() }} completed</span>
     </div>
 
+    <div class="filter-row">
+      <button class="filter-btn" [class.active]="filter() === 'all'" type="button" (click)="setFilter('all')">All</button>
+      <button class="filter-btn" [class.active]="filter() === 'active'" type="button" (click)="setFilter('active')">Active</button>
+      <button class="filter-btn" [class.active]="filter() === 'completed'" type="button" (click)="setFilter('completed')">Completed</button>
+      <button class="filter-btn secondary" type="button" (click)="clearCompleted()">Clear completed</button>
+    </div>
+
     <section class="tracking-demo">
       <div class="tracking-demo-header">
         <h2>Live demo: tracking by $index vs tracking by id</h2>
@@ -69,7 +76,7 @@
       <div class="empty-state">No tasks yet. Add your first one above.</div>
     } @else {
       <ul class="todo-list">
-        @for (todo of todos(); track todo.id) {
+        @for (todo of visibleTodos(); track todo.id) {
           <li class="todo-item" [class.done]="todo.done">
             <div class="todo-content" (click)="toggleTodo(todo.id)">
               <span class="todo-index">{{ $index + 1 }}</span>
