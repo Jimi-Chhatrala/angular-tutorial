@@ -46,6 +46,12 @@
       </div>
     }
 
+    <div class="demo-toggle-row">
+      <button class="demo-toggle-btn" type="button" (click)="toggleDemo()">
+        {{ showDemo() ? 'Hide demo' : 'Show demo' }}
+      </button>
+    </div>
+
     @if (showDemo()) {
       <section class="tracking-demo">
         <div class="tracking-demo-header">
