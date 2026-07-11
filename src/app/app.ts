@@ -45,7 +45,9 @@ export class App {
   editingTodoId = signal<number | null>(null);
   editingText = signal('');
   draggedTodoId = signal<number | null>(null);
-  touchReorderTargetId = signal<number | null>(null);
+  dropTargetId = signal<number | null>(null);
+  touchSourceId = signal<number | null>(null);
+  touchDropTargetId = signal<number | null>(null);
 
   indexTrackingItems = signal<TrackingDemoItem[]>([
     { id: 101, label: 'Alpha', note: 'Position-based item', badge: 'A' },
@@ -270,27 +272,53 @@ export class App {
 
     if (draggedId === null || draggedId === targetId) {
       this.draggedTodoId.set(null);
+      this.dropTargetId.set(null);
       return;
     }
 
     this.reorderTodos(draggedId, targetId);
     this.draggedTodoId.set(null);
+    this.dropTargetId.set(null);
+  }
+
+  setDropTarget(id: number) {
+    this.dropTargetId.set(id);
+  }
+
+  clearDropTarget(id: number) {
+    if (this.dropTargetId() === id) {
+      this.dropTargetId.set(null);
+    }
   }
 
   selectTodoForTouch(id: number) {
-    this.touchReorderTargetId.set(id);
+    this.touchSourceId.set(id);
+  }
+
+  setTouchDropTarget(event: TouchEvent, id: number) {
+    event.stopPropagation();
+    if (this.touchSourceId() !== null && this.touchSourceId() !== id) {
+      this.touchDropTargetId.set(id);
+    }
+  }
+
+  cancelTouchReorder() {
+    this.touchSourceId.set(null);
+    this.touchDropTargetId.set(null);
   }
 
   commitTouchReorder(targetId: number) {
-    const draggedId = this.touchReorderTargetId();
+    const draggedId = this.touchSourceId();
 
     if (draggedId === null || draggedId === targetId) {
-      this.touchReorderTargetId.set(null);
+      this.touchSourceId.set(null);
+      this.touchDropTargetId.set(null);
       return;
     }
 
     this.reorderTodos(draggedId, targetId);
-    this.touchReorderTargetId.set(null);
+    this.touchSourceId.set(null);
+    this.touchDropTargetId.set(null);
   }
 
   private loadTodos() {

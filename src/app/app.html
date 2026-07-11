@@ -146,12 +146,18 @@
             class="todo-item"
             [class.done]="todo.done"
             [class.reorder-active]="draggedTodoId() === todo.id"
+            [class.drop-target]="dropTargetId() === todo.id || touchDropTargetId() === todo.id"
+            [class.touch-source]="touchSourceId() === todo.id"
             draggable="true"
             (dragstart)="draggedTodoId.set(todo.id)"
+            (dragenter)="setDropTarget(todo.id)"
+            (dragleave)="clearDropTarget(todo.id)"
             (dragover)="$event.preventDefault()"
             (drop)="dropTodo(todo.id); $event.preventDefault()"
             (touchstart)="selectTodoForTouch(todo.id)"
+            (touchmove)="setTouchDropTarget($event, todo.id)"
             (touchend)="commitTouchReorder(todo.id)"
+            (touchcancel)="cancelTouchReorder()"
           >
             @if (editingTodoId() === todo.id) {
               <div class="todo-edit-row">
