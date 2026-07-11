@@ -119,6 +119,36 @@ export class App {
     this.persistTodos();
   }
 
+  moveTodoUp(id: number) {
+    this.todos.update((list) => {
+      const index = list.findIndex((item) => item.id === id);
+
+      if (index <= 0) return list;
+
+      const updated = [...list];
+      const [item] = updated.splice(index, 1);
+      updated.splice(index - 1, 0, item);
+      return updated;
+    });
+
+    this.persistTodos();
+  }
+
+  moveTodoDown(id: number) {
+    this.todos.update((list) => {
+      const index = list.findIndex((item) => item.id === id);
+
+      if (index === -1 || index >= list.length - 1) return list;
+
+      const updated = [...list];
+      const [item] = updated.splice(index, 1);
+      updated.splice(index + 1, 0, item);
+      return updated;
+    });
+
+    this.persistTodos();
+  }
+
   private loadTodos() {
     const stored = localStorage.getItem('todos');
 
