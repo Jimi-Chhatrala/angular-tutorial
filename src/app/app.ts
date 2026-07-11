@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, signal } from '@angular/core';
+import { Component, computed, HostBinding, OnDestroy, signal } from '@angular/core';
 import { DemoRowComponent } from './demo-row/demo-row';
 
 type TodoFilter = 'all' | 'active' | 'completed';
@@ -32,6 +32,11 @@ interface TrackingDemoItem {
 export class App implements OnDestroy {
   protected readonly title = signal('angular-tutorial');
 
+  @HostBinding('class.dark-theme')
+  get isDarkTheme() {
+    return this.darkMode();
+  }
+
   newTodo = signal('');
   newDueDate = signal('');
   newPriority = signal<TodoPriority>('medium');
@@ -43,6 +48,7 @@ export class App implements OnDestroy {
   searchTerm = signal('');
   showDemo = signal(false);
   reorderMode = signal(false);
+  darkMode = signal(false);
   selectedTodoIds = signal<number[]>([]);
   pendingDeletedTodo = signal<TodoItem | null>(null);
   pendingDeletedIndex = signal<number | null>(null);
@@ -102,6 +108,7 @@ export class App implements OnDestroy {
 
   constructor() {
     this.loadTodos();
+    this.loadTheme();
   }
 
   addTodo() {
@@ -331,6 +338,11 @@ export class App implements OnDestroy {
     this.showDemo.update((value) => !value);
   }
 
+  toggleTheme() {
+    this.darkMode.update((value) => !value);
+    this.persistTheme();
+  }
+
   toggleReorderMode() {
     this.reorderMode.update((value) => {
       if (value) {
@@ -486,8 +498,19 @@ export class App implements OnDestroy {
     }
   }
 
+  private loadTheme() {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme === 'dark') {
+      this.darkMode.set(true);
+    }
+  }
+
   private persistTodos() {
     localStorage.setItem('todos', JSON.stringify(this.todos()));
+  }
+
+  private persistTheme() {
+    localStorage.setItem('theme', this.darkMode() ? 'dark' : 'light');
   }
 
   removeFirstIndexItem() {

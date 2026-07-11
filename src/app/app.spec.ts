@@ -21,6 +21,17 @@ describe('App', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Todo App');
   });
 
+  it('toggles the dark mode state', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+
+    expect(app.darkMode()).toBeFalse();
+
+    app.toggleTheme();
+
+    expect(app.darkMode()).toBeTrue();
+  });
+
   it('adds a todo when Enter is pressed', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();

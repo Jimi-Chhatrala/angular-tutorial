@@ -1,8 +1,15 @@
 <div class="todo-app">
   <div class="todo-card">
     <div class="todo-header">
-      <h1>Todo App</h1>
-      <p>Keep track of what matters today.</p>
+      <div class="todo-header-top">
+        <div>
+          <h1>Todo App</h1>
+          <p>Keep track of what matters today.</p>
+        </div>
+        <button class="theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-pressed]="darkMode()">
+          {{ darkMode() ? '☀️ Light' : '🌙 Dark' }}
+        </button>
+      </div>
     </div>
 
     <div class="todo-input-row">
