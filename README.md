@@ -93,3 +93,4 @@ Angular Tutorial Git Branch Till Now:
 22-two-way-binding
 23-todo-app
 24-signal-template-binding
+25-input-using-signal
