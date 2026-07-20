@@ -94,3 +94,4 @@ Angular Tutorial Git Branch Till Now:
 23-todo-app
 24-signal-template-binding
 25-input-using-signal
+26-store-with-signal
