@@ -95,3 +95,4 @@ Angular Tutorial Git Branch Till Now:
 24-signal-template-binding
 25-input-using-signal
 26-store-with-signal
+27-forms-with-signal
