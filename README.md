@@ -96,3 +96,4 @@ Angular Tutorial Git Branch Till Now:
 25-input-using-signal
 26-store-with-signal
 27-forms-with-signal
+28-reusable-card-component
