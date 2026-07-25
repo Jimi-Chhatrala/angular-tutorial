@@ -99,3 +99,4 @@ Angular Tutorial Git Branch Till Now:
 28-reusable-card-component
 29-reusable-button-component
 30-reusable-form-field-component
+31-basic-routing
