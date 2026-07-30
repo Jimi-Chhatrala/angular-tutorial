@@ -101,3 +101,4 @@ Angular Tutorial Git Branch Till Now:
 30-reusable-form-field-component
 31-basic-routing
 32-nested-child-routes
+33-lazy-loading
