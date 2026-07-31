@@ -102,3 +102,4 @@ Angular Tutorial Git Branch Till Now:
 31-basic-routing
 32-nested-child-routes
 33-lazy-loading
+34-header-component-with-routing
