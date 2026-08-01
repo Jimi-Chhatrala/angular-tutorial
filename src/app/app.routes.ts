@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComp } from './home-comp/home-comp';
 import { AboutComp } from './about-comp/about-comp';
 import { ContactComp } from './contact-comp/contact-comp';
+import { PageNotFoundComp } from './page-not-found-comp/page-not-found-comp';
 
 export const routes: Routes = [
   {
@@ -15,5 +16,9 @@ export const routes: Routes = [
   {
     path: 'contact',
     component: ContactComp,
+  },
+  {
+    path: '**',
+    component: PageNotFoundComp,
   },
 ];
