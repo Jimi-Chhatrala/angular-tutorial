@@ -105,3 +105,4 @@ Angular Tutorial Git Branch Till Now:
 34-header-component-with-routing
 35-page-not-found-component
 36-can-activate-guard
+37-can-deactivate-guard
