@@ -106,3 +106,4 @@ Angular Tutorial Git Branch Till Now:
 35-page-not-found-component
 36-can-activate-guard
 37-can-deactivate-guard
+38-route-parameters
