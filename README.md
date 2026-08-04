@@ -107,3 +107,4 @@ Angular Tutorial Git Branch Till Now:
 36-can-activate-guard
 37-can-deactivate-guard
 38-route-parameters
+39-query-parameters
