@@ -119,4 +119,4 @@ Run below command for creating and running json server API.
 ```
 npx json-server db.json
 ```
-47-get-request-api-tosignal-method-json-server
+# 47-get-request-api-tosignal-method-json-server
