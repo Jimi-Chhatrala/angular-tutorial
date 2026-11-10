@@ -1,0 +1,15 @@
+<h1>User page</h1>
+
+@if (loading()) {
+  <p role="status">Loading users...</p>
+} @else if (errorMessage()) {
+  <p role="alert">{{ errorMessage() }}</p>
+} @else {
+  <ul>
+    @for (user of users(); track user.id) {
+      <li>{{ user.name }} ({{ user.email }})</li>
+    } @empty {
+      <li>No users found.</li>
+    }
+  </ul>
+}
