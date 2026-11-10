@@ -46,10 +46,10 @@
       "isActive": true
     },
     {
-      "id": "4",
       "name": "Priya",
       "email": "priya@gmail.com",
-      "isActive": false
+      "isActive": false,
+      "id": "4"
     },
     {
       "name": "Accusamus hic dolore",
@@ -66,7 +66,7 @@
     {
       "name": "Quo nihil adipisicin",
       "email": "zofapiwel@mailinator.com",
-      "isActive": false,
+      "isActive": true,
       "id": "12Ni2qPsNZ4"
     }
   ],

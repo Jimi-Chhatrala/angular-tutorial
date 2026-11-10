@@ -123,3 +123,4 @@ npx json-server db.json
 # 48-get-api-data-validating-data-using-interface
 # 49-post-request-api-json-server
 # 50-put-request-api-update-data-with-signals-json-server
+# 51-patch-request-api-json-server
