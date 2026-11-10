@@ -114,3 +114,8 @@ Angular Tutorial Git Branch Till Now:
 # 43-signals-forms
 # 44-call-rest-api-using-services-and-httpclient
 # 45-call-api-with-tosignal-httpclient-without-subscribe
+# 46-json-server-for-api-creation-fake-rest-api
+Run below command for creating and running json server API.
+```
+npx json-server db.json
+```
