@@ -127,3 +127,7 @@ npx json-server db.json
 # 52-delete-request-api-json-server
 # 53-use-bootstrap
 # 54-use-tailwindcss
+# 55-use-angular-material
+```
+npx ng add @angular/material@^21 --defaults --skip-confirmation
+```
