@@ -11,11 +11,18 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
+  // Get all users
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.apiUrl);
   }
 
+  // Add a user
   addUser(user: User): Observable<User> {
     return this.httpClient.post<User>(this.apiUrl, user);
+  }
+
+  // Update an existing user (PUT request API)
+  updateUser(id: number, user: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.apiUrl}/${id}`, user);
   }
 }

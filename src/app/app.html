@@ -13,7 +13,9 @@
   (input)="email.set($event.target.value)"
 />
 
-<button (click)="submitForm()">Add user</button>
+<button (click)="submitForm()">
+  {{ editingUpdateID() ? 'Update user' : 'Add user' }}
+</button>
 
 <hr />
 <h2>Users List From JSON Server GET API</h2>
@@ -21,5 +23,6 @@
 <ul>
   @for (user of users(); track user.id) {
     <li>{{ user.name }} - {{ user.email }} - Is Active: {{ user.isActive ? 'Yes' : 'No' }}</li>
+    <button (click)="editUser(user)">Edit User</button>
   }
 </ul>
