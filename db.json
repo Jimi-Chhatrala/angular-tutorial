@@ -62,12 +62,6 @@
       "email": "testinguser1@mailinator.com",
       "isActive": false,
       "id": "jLSFo0NtEto"
-    },
-    {
-      "name": "Quo nihil adipisicin",
-      "email": "zofapiwel@mailinator.com",
-      "isActive": true,
-      "id": "12Ni2qPsNZ4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

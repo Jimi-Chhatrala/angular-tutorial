@@ -85,6 +85,17 @@ export class App {
     });
   }
 
+  deleteUser(user: User) {
+    const confirmDelete = confirm(`Are you sure to delete user: ${user.name}?`);
+    if (!confirmDelete) return;
+
+    this.userService.deleteUser(user.id!).subscribe(() => {
+      this.users.update((list_user) =>
+        list_user.filter((filter_user) => filter_user.id !== user.id),
+      );
+    });
+  }
+
   afterSave() {
     this.loadUsers(); // Refresh the user list after adding a new user
     this.name.set('');

@@ -30,4 +30,9 @@ export class UserService {
   updateUserStatus(id: number, isActive: boolean): Observable<User> {
     return this.httpClient.patch<User>(`${this.apiUrl}/${id}`, { isActive });
   }
+
+  // Delete a user
+  deleteUser(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
