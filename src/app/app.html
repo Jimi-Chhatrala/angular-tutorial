@@ -2,6 +2,6 @@
 
 <ul>
   @for (user of users(); track user.id) {
-    <li>{{ user.name }} - {{ user.email }}</li>
+    <li>{{ user.name }} - {{ user.email }} - Is Active: {{ user.isActive ? 'Yes' : 'No' }}</li>
   }
 </ul>

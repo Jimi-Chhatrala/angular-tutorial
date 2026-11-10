@@ -15,22 +15,26 @@
     {
       "id": 1,
       "name": "Alice",
-      "email": "alice@gmail.com"
+      "email": "alice@gmail.com",
+      "isActive": true
     },
     {
       "id": 2,
       "name": "Mohit",
-      "email": "mohit@gmail.com"
+      "email": "mohit@gmail.com",
+      "isActive": false
     },
     {
       "id": 3,
       "name": "Rahul",
-      "email": "rahul@gmail.com"
+      "email": "rahul@gmail.com",
+      "isActive": true
     },
     {
       "id": 4,
       "name": "Priya",
-      "email": "priya@gmail.com"
+      "email": "priya@gmail.com",
+      "isActive": false
     }
   ]
 }
