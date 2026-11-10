@@ -110,4 +110,4 @@ Angular Tutorial Git Branch Till Now:
 39-query-parameters
 40-navigation-api
 41-routing-and-signal
-42-lifecycle-hooks-methods
+# 42-lifecycle-hooks-methods
