@@ -1,40 +1,68 @@
 {
-  "$schema": "./node_modules/json-server/schema.json",
   "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
   ],
   "profile": {
     "name": "typicode"
   },
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Alice",
       "email": "alice@gmail.com",
       "isActive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Mohit",
       "email": "mohit@gmail.com",
       "isActive": false
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Rahul",
       "email": "rahul@gmail.com",
       "isActive": true
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Priya",
       "email": "priya@gmail.com",
       "isActive": false
+    },
+    {
+      "name": "Accusamus hic dolore",
+      "email": "dojy@mailinator.com",
+      "isActive": false,
+      "id": "pJfVXrzp63U"
+    },
+    {
+      "name": "Sed culpa eos ex di",
+      "email": "samyhozopa@mailinator.com",
+      "isActive": false,
+      "id": "jLSFo0NtEto"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

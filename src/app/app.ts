@@ -12,7 +12,50 @@ import { User } from './models/user';
 export class App {
   protected readonly title = signal('angular-tutorial');
 
-  userService = inject(UserService);
+  // Way 1 ----------------------------------------------------------
+  // userService = inject(UserService);
 
-  users = toSignal<User[]>(this.userService.getUsers());
+  // users = toSignal<User[]>(this.userService.getUsers());
+
+  // Way 2 ----------------------------------------------------------
+  // users: User[] = [];
+
+  // constructor(private userService: UserService) {}
+
+  // ngOnInit() {
+  //   this.userService.getUsers().subscribe((data) => {
+  //     this.users = data;
+  //   })
+  // }
+
+  // Way 3 ----------------------------------------------------------
+  users = signal<User[]>([]);
+  name = signal<string>('');
+  email = signal<string>('');
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.loadUsers(); // Load users on component init
+  }
+
+  loadUsers() {
+    this.userService.getUsers().subscribe((data) => {
+      this.users.set(data);
+    });
+  }
+
+  submitForm() {
+    const payload: User = {
+      name: this.name(),
+      email: this.email(),
+      isActive: false,
+    };
+    this.userService.addUser(payload).subscribe(() => {
+      alert('User added successfully.');
+      this.loadUsers(); // Refresh the user list after adding a new user
+      this.name.set('');
+      this.email.set('');
+    });
+  }
 }
