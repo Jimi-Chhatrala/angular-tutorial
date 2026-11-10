@@ -122,3 +122,4 @@ npx json-server db.json
 # 47-get-request-api-tosignal-method-json-server
 # 48-get-api-data-validating-data-using-interface
 # 49-post-request-api-json-server
+# 50-put-request-api-update-data-with-signals-json-server
