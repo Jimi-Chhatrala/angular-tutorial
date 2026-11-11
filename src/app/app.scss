@@ -1,0 +1,31 @@
+.container {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+}
+
+.preview-box {
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hex-code {
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+button {
+  background-color: #2c2e30;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+}
