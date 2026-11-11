@@ -131,3 +131,7 @@ npx json-server db.json
 ```
 npx ng add @angular/material@^21 --defaults --skip-confirmation
 ```
+# 56-prepare-build-for-deployment-check-with-http-server
+```
+ng build => cd dist/angular-tutorial/browser/ => http-server
+```
