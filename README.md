@@ -141,3 +141,6 @@ ng build => cd dist/angular-tutorial/browser/ => http-server
 # 60-effect-with-angular-signals
 # 61-computed-signal-in-angular
 # 62-install-ngrx-for-global-state-management
+```
+ng add @ngrx/store@21
+```
