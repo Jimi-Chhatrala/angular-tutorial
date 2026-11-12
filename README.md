@@ -138,3 +138,4 @@ ng build => cd dist/angular-tutorial/browser/ => http-server
 # 57-color-pickup-app
 # 58-users-review-page
 # 59-signals-set-and-update-methods
+# 60-effect-with-angular-signals
