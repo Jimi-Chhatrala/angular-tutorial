@@ -148,3 +148,4 @@ ng add @ngrx/store@21
 # 64-ngrx-reducer
 # 65-store-and-dispatch
 # 66-selectors-for-reading-state
+# 67-feature-store
