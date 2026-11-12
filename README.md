@@ -150,3 +150,7 @@ ng add @ngrx/store@21
 # 66-selectors-for-reading-state
 # 67-feature-store
 # 68-ngrx-with-forms
+# 69-ngrx-effects-api-calls
+```
+ng add @ngrx/effects@21
+```
