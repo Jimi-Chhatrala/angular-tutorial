@@ -5,7 +5,7 @@ import { decrement, increment, reset } from './counter.action';
 export const initialState = 0;
 
 // Creating Reducer Function
-export const counterReducer = createReducer(
+export const reducer = createReducer(
   initialState,
 
   // On Increment Action
