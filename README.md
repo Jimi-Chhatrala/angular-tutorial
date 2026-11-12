@@ -139,3 +139,4 @@ ng build => cd dist/angular-tutorial/browser/ => http-server
 # 58-users-review-page
 # 59-signals-set-and-update-methods
 # 60-effect-with-angular-signals
+# 61-computed-signal-in-angular
