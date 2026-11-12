@@ -147,3 +147,4 @@ ng add @ngrx/store@21
 # 63-ngrx-actions
 # 64-ngrx-reducer
 # 65-store-and-dispatch
+# 66-selectors-for-reading-state
